@@ -205,7 +205,7 @@ cultivos.forEach(function(cultivo) {
     elemento.className = "cultivo-item " + obtenerColor(cultivo.nombre);
 
     elemento.innerHTML = `
-        <h3>🌱 ${escaparHTML(cultivo.nombre)}</h3>
+        <h3> ${escaparHTML(cultivo.nombre)}</h3>
 
         <p><strong>Parcela:</strong> ${escaparHTML(cultivo.parcela)}</p>
 
@@ -351,7 +351,7 @@ cultivos.forEach(function(cultivo) {
     elemento.className = "cultivo-item " + obtenerColor(cultivo.nombre);
 
     elemento.innerHTML = `
-        <strong>🌱 ${escaparHTML(cultivo.nombre)}</strong>
+        <strong> ${escaparHTML(cultivo.nombre)}</strong>
         <p>Parcela: ${escaparHTML(cultivo.parcela)}</p>
         <p>Etapa: ${escaparHTML(cultivo.etapa)}</p>
     `;
@@ -412,37 +412,42 @@ const calendario = {
 // ==========================================
 
 function actualizarOpcionesCalendario() {
+    const selector = document.getElementById("cultivoCalendario");
 
-const selector = document.getElementById("cultivoCalendario");
+    const cultivosBase = [
+        "Poroto",
+        "Maíz",
+        "Mandioca",
+        "Tomate",
+        "Lechuga",
+        "Zanahoria",
+        "Maní"
+    ];
 
-const seleccionAnterior = selector.value;
+    // Agregar los cultivos personalizados registrados
+    const cultivosPersonalizados = cultivos
+        .map(cultivo => cultivo.nombre)
+        .filter(nombre => !cultivosBase.includes(nombre));
 
-selector.innerHTML = `
-    <option value="">Seleccioná una opción</option>
-`;
+    // Combinar los originales con los personalizados
+    const todosLosCultivos = [
+        ...cultivosBase,
+        ...new Set(cultivosPersonalizados)
+    ];
 
-const nombres = [...new Set(cultivos.map(function(cultivo) {
-    return cultivo.nombre;
-}))];
+    const seleccionAnterior = selector.value;
 
-nombres.forEach(function(nombre) {
+    selector.innerHTML = `
+        <option value="">Seleccioná un cultivo</option>
+        ${todosLosCultivos.map(nombre =>
+            `<option value="${escaparHTML(nombre)}">${escaparHTML(nombre)}</option>`
+        ).join("")}
+    `;
 
-    const opcion = document.createElement("option");
-
-    opcion.value = nombre;
-    opcion.textContent = nombre;
-
-    selector.appendChild(opcion);
-
-});
-
-if (nombres.includes(seleccionAnterior)) {
-    selector.value = seleccionAnterior;
+    if (todosLosCultivos.includes(seleccionAnterior)) {
+        selector.value = seleccionAnterior;
+    }
 }
-
-
-}
-
 // ==========================================
 // CONSULTAR CALENDARIO
 // ==========================================
@@ -464,7 +469,7 @@ const dato = calendario[nombre];
 if (!dato) {
 
     resultado.innerHTML = `
-        <h3>🌱 ${escaparHTML(nombre)}</h3>
+        <h3> ${escaparHTML(nombre)}</h3>
         <p>Todavía no tenemos información del calendario para este cultivo.</p>
         <p>Consultá las recomendaciones agrícolas de tu región antes de sembrar.</p>
     `;
@@ -473,7 +478,7 @@ if (!dato) {
 }
 
 resultado.innerHTML = `
-    <h3>🌱 ${escaparHTML(nombre)}</h3>
+    <h3> ${escaparHTML(nombre)}</h3>
     <p><strong>Período orientativo:</strong> ${dato.meses}</p>
     <p><strong>Recomendación:</strong> ${dato.consejo}</p>
     <p><em>La época puede variar según la zona y las condiciones climáticas.</em></p>
@@ -529,7 +534,7 @@ opciones.forEach(function(cultivo) {
 });
 
 resultado.innerHTML = `
-    <h3>🌱 Alternativas después de ${escaparHTML(nombre)}</h3>
+    <h3>Alternativas después de ${escaparHTML(nombre)}</h3>
     <p><strong>Familia del cultivo anterior:</strong> ${familia}</p>
     <p>Algunas alternativas para evaluar:</p>
     <ul>${lista}</ul>
@@ -619,7 +624,7 @@ avisos.forEach(function(aviso) {
     elemento.className = "aviso";
 
     elemento.innerHTML = `
-        <strong>🔔 ${escaparHTML(aviso.titulo)}</strong>
+        <strong> ${escaparHTML(aviso.titulo)}</strong>
         <p>${escaparHTML(aviso.mensaje)}</p>
     `;
 
