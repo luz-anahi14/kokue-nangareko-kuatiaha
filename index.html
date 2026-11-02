@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOKUE ÑANGAREKO KUATIAHA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="contenedor">
+<!-- MENU LATERAL -->
+<aside class="menu">
+    <nav>
+        <button class="activo" onclick="mostrarSeccion('inicio', this)">Inicio</button>
+        <button onclick="mostrarSeccion('kokue', this)">🌱 Mi kokue</button>
+        <button onclick="mostrarSeccion('calendario', this)">📅 Calendario</button>
+        <button onclick="mostrarSeccion('notificaciones', this)">🔔 Mis avisos</button>
+    </nav>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="contenido">
+
+    <header class="encabezado">
+        <div>
+            <h1>KOKUE ÑANGAREKO KUATIAHA</h1>
+            <p>Sistema comunitario de gestión y planificación de cultivos.</p>
+            <p class="lema">
+                Ñañangareko ñande yvýre, ñañangareko ñane rembiapóre.
+            </p>
+        </div>
+    </header>
+
+
+    <!-- INICIO -->
+    <section id="inicio" class="seccion">
+
+        <h2>¡Bienvenido a tu kokue!</h2>
+
+        <p>Elegí qué necesitás consultar hoy.</p>
+
+        <div class="tarjetas tarjetas-principales">
+
+            <button class="tarjeta acceso-principal"
+                onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+                <span class="icono-principal">🌱</span>
+                <strong>MI KOKUE</strong>
+                <span>Registrá y consultá tus cultivos.</span>
+            </button>
+
+            <button class="tarjeta acceso-principal"
+                onclick="mostrarSeccion('calendario', document.querySelectorAll('.menu button')[2])">
+                <span class="icono-principal">📅</span>
+                <strong>CALENDARIO</strong>
+                <span>Consultá las épocas de siembra.</span>
+            </button>
+
+            <button class="tarjeta acceso-principal"
+                onclick="mostrarSeccion('notificaciones', document.querySelectorAll('.menu button')[3])">
+                <span class="icono-principal">🔔</span>
+                <strong>MIS AVISOS</strong>
+                <span>Revisá tus recordatorios.</span>
+            </button>
+
+        </div>
+
+        <div class="panel">
+            <h3>¿Cómo utilizar la aplicación?</h3>
+
+            <p>
+                Es muy sencillo. Registrá tus cultivos, consultá el calendario
+                y revisá tus avisos para acompañar el crecimiento de tu kokue.
+            </p>
+
+            <p>
+                Podés utilizar esta aplicación desde un celular o una computadora.
+            </p>
+        </div>
+
+        <div class="panel">
+            <h3>Mis cultivos actuales</h3>
+            <div id="resumenCultivos"></div>
+        </div>
+
+    </section>
+
+
+    <!-- MI KOKUE -->
+    <section id="kokue" class="seccion oculto">
+
+        <h2>🌱 Mi kokue</h2>
+
+        <p>Registrá tus cultivos y acompañá su crecimiento.</p>
+
+        <div class="panel">
+
+            <h3>Registrar un cultivo</h3>
+
+            <form id="formCultivo">
+
+                <label for="nombreCultivo">¿Qué vas a cultivar?</label>
+
+                <select id="nombreCultivo" required>
+                    <option value="">Seleccioná un cultivo</option>
+                    <option value="Poroto">Poroto</option>
+                    <option value="Maíz">Maíz</option>
+                    <option value="Mandioca">Mandioca</option>
+                    <option value="Tomate">Tomate</option>
+                    <option value="Lechuga">Lechuga</option>
+                    <option value="Zanahoria">Zanahoria</option>
+                    <option value="Maní">Maní</option>
+                    <option value="Otro">Otro</option>
+                </select>
+
+                <label for="parcela">¿En qué parcela?</label>
+                <input type="text" id="parcela" placeholder="Ejemplo: Parcela 1" required>
+
+                <label for="fechaSiembra">Fecha de siembra:</label>
+                <input type="date" id="fechaSiembra" required>
+
+                <label for="etapaCultivo">¿En qué etapa se encuentra?</label>
+
+                <select id="etapaCultivo" required>
+                    <option value="">Seleccioná una etapa</option>
+                    <option value="Preparación del suelo">Preparación del suelo</option>
+                    <option value="Siembra">Siembra</option>
+                    <option value="Germinación">Germinación</option>
+                    <option value="Crecimiento">Crecimiento</option>
+                    <option value="Floración">Floración</option>
+                    <option value="Cosecha">Cosecha</option>
+                </select>
+
+                <button type="submit" class="btn-guardar">
+                    Guardar cultivo
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="panel">
+            <h3>Mis cultivos registrados</h3>
+
+            <p>Identificá cada cultivo por su color.</p>
+
+            <div id="listaCultivos"></div>
+        </div>
+
+        <div class="panel">
+            <h3>Otras herramientas</h3>
+
+            <button class="btn-guardar"
+                onclick="mostrarSeccion('clima', null)">
+                🌦️ Clima y recomendaciones
+            </button>
+
+            <button class="btn-guardar"
+                onclick="mostrarSeccion('rotacion', null)">
+                🔄 Rotación de cultivos
+            </button>
+        </div>
+
+    </section>
+
+
+    <!-- CALENDARIO AGRICOLA -->
+    <section id="calendario" class="seccion oculto">
+
+        <h2>📅 Calendario agrícola</h2>
+
+        <p>Consultá los períodos orientativos para sembrar.</p>
+
+        <div class="panel">
+
+            <h3>¿Qué querés sembrar?</h3>
+
+            <label for="cultivoCalendario">Seleccioná un cultivo:</label>
+
+            <select id="cultivoCalendario">
+                <option value="">Seleccioná una opción</option>
+                <option value="Poroto">Poroto</option>
+                <option value="Maíz">Maíz</option>
+                <option value="Mandioca">Mandioca</option>
+                <option value="Tomate">Tomate</option>
+                <option value="Lechuga">Lechuga</option>
+                <option value="Zanahoria">Zanahoria</option>
+                <option value="Maní">Maní</option>
+            </select>
+
+            <button class="btn-guardar" onclick="consultarCalendario()">
+                Consultar
+            </button>
+
+            <div id="resultadoCalendario" class="resultado"></div>
+
+        </div>
+
+        <div class="panel">
+            <h3>🌦️ Consultar el clima</h3>
+
+            <p>También podés consultar las condiciones climáticas y recomendaciones.</p>
+
+            <button class="btn-guardar"
+                onclick="mostrarSeccion('clima', null)">
+                Ver clima y recomendaciones
+            </button>
+        </div>
+
+        <div class="panel">
+            <h3>Importante</h3>
+
+            <p>
+                Los períodos son orientativos. La época adecuada puede variar
+                según la región, la variedad y las condiciones del suelo y del clima.
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- CLIMA -->
+    <section id="clima" class="seccion oculto">
+
+        <h2>🌦️ Clima y recomendaciones</h2>
+
+        <p>Información y consejos sencillos para cuidar tus cultivos.</p>
+
+        <div class="panel">
+
+            <h3>Condiciones climáticas</h3>
+
+            <span class="etiqueta">Datos de demostración</span>
+
+            <div class="clima-datos">
+
+                <div class="dato-clima">
+                    <h3>Temperatura</h3>
+                    <strong>28 °C</strong>
+                </div>
+
+                <div class="dato-clima">
+                    <h3>Humedad</h3>
+                    <strong>65 %</strong>
+                </div>
+
+                <div class="dato-clima">
+                    <h3>Condición</h3>
+                    <strong>Parcialmente nublado</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="panel">
+
+            <h3>Recomendaciones</h3>
+
+            <div class="recomendacion">
+                <strong>Cuidado del suelo</strong>
+                <p>Prepará el terreno y verificá que tenga un buen drenaje.</p>
+            </div>
+
+            <div class="recomendacion">
+                <strong>Riego</strong>
+                <p>Controlá la humedad del suelo antes de regar.</p>
+            </div>
+
+            <div class="recomendacion">
+                <strong>Seguimiento</strong>
+                <p>Observá el crecimiento de tus cultivos y revisá si presentan cambios.</p>
+            </div>
+
+        </div>
+
+        <button class="btn-guardar"
+            onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+            Volver a Mi kokue
+        </button>
+
+    </section>
+
+
+    <!-- ROTACION -->
+    <section id="rotacion" class="seccion oculto">
+
+        <h2>🔄 Rotación de cultivos</h2>
+
+        <p>Planificá qué cultivar en tu parcela la próxima temporada.</p>
+
+        <div class="panel">
+
+            <h3>¿Qué cultivaste anteriormente?</h3>
+
+            <label for="cultivoAnterior">Seleccioná el cultivo anterior:</label>
+
+            <select id="cultivoAnterior">
+                <option value="">Seleccioná un cultivo</option>
+                <option value="Poroto">Poroto</option>
+                <option value="Maíz">Maíz</option>
+                <option value="Mandioca">Mandioca</option>
+                <option value="Tomate">Tomate</option>
+                <option value="Lechuga">Lechuga</option>
+                <option value="Zanahoria">Zanahoria</option>
+                <option value="Maní">Maní</option>
+            </select>
+
+            <button class="btn-guardar" onclick="consultarRotacion()">
+                Ver alternativas
+            </button>
+
+            <div id="resultadoRotacion" class="resultado"></div>
+
+        </div>
+
+        <div class="panel">
+            <h3>¿Por qué rotar los cultivos?</h3>
+
+            <p>
+                La rotación permite alternar diferentes tipos de cultivos
+                y ayuda a cuidar el suelo y reducir problemas asociados
+                con la repetición de una misma familia vegetal.
+            </p>
+        </div>
+
+        <button class="btn-guardar"
+            onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+            Volver a Mi kokue
+        </button>
+
+    </section>
+
+
+    <!-- NOTIFICACIONES -->
+    <section id="notificaciones" class="seccion oculto">
+
+        <h2>🔔 Mis avisos</h2>
+
+        <p>Revisá los recordatorios para cuidar tus cultivos.</p>
+
+        <div class="panel">
+
+            <h3>Mis recordatorios</h3>
+
+            <div id="listaNotificaciones"></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
