@@ -1,7 +1,9 @@
-
+// ==========================================
 // VARIABLES Y DATOS
+// ==========================================
 
 let cultivos = JSON.parse(localStorage.getItem("cultivos")) || [];
+
 const etapas = [
 "Preparación del suelo",
 "Siembra",
@@ -11,7 +13,9 @@ const etapas = [
 "Cosecha"
 ];
 
+// ==========================================
 // FAMILIAS Y COLORES DE CULTIVOS
+// ==========================================
 
 const familias = {
 "Poroto": "Leguminosa",
@@ -36,47 +40,78 @@ function obtenerColor(nombre) {
 const familia = familias[nombre];
 return colores[familia] || "color-gris";
 }
-// CAMBIAR DE SECCION
 
+// ==========================================
 // CAMBIAR DE SECCION
+// ==========================================
 
 function mostrarSeccion(nombre, boton) {
 
-    const secciones = document.querySelectorAll(".seccion");
 
-    secciones.forEach(function(seccion) {
-        seccion.classList.add("oculto");
-    });
+const secciones = document.querySelectorAll(".seccion");
 
-    const seccionSeleccionada = document.getElementById(nombre);
+secciones.forEach(function(seccion) {
+    seccion.classList.add("oculto");
+});
 
-    if (seccionSeleccionada) {
-        seccionSeleccionada.classList.remove("oculto");
-    }
+const seccionSeleccionada = document.getElementById(nombre);
 
-    const botones = document.querySelectorAll(".menu button");
+if (seccionSeleccionada) {
+    seccionSeleccionada.classList.remove("oculto");
+}
 
+const botones = document.querySelectorAll(".menu button");
+
+botones.forEach(function(elemento) {
+    elemento.classList.remove("activo");
+});
+
+if (boton) {
+    boton.classList.add("activo");
+} else {
     botones.forEach(function(elemento) {
-        elemento.classList.remove("activo");
+        if (
+            elemento.getAttribute("onclick") &&
+            elemento.getAttribute("onclick").includes("'" + nombre + "'")
+        ) {
+            elemento.classList.add("activo");
+        }
     });
+}
 
-    if (boton) {
-        boton.classList.add("activo");
-    } else {
-        botones.forEach(function(elemento) {
-            if (
-                elemento.getAttribute("onclick") &&
-                elemento.getAttribute("onclick").includes("'" + nombre + "'")
-            ) {
-                elemento.classList.add("activo");
-            }
-        });
-    }
+actualizarPantalla();
 
-    actualizarPantalla();
+
 }
 
 window.mostrarSeccion = mostrarSeccion;
+
+// ==========================================
+// CULTIVOS PERSONALIZADOS
+// ==========================================
+
+const selectorCultivo = document.getElementById("nombreCultivo");
+const campoOtroCultivo = document.getElementById("campoOtroCultivo");
+const inputOtroCultivo = document.getElementById("otroCultivo");
+
+selectorCultivo.addEventListener("change", function() {
+
+
+if (this.value === "Otro") {
+
+    campoOtroCultivo.classList.remove("oculto");
+    inputOtroCultivo.required = true;
+
+} else {
+
+    campoOtroCultivo.classList.add("oculto");
+    inputOtroCultivo.required = false;
+    inputOtroCultivo.value = "";
+
+}
+
+
+});
 
 // ==========================================
 // GUARDAR CULTIVOS
@@ -87,7 +122,14 @@ document.getElementById("formCultivo").addEventListener("submit", function(event
 
 evento.preventDefault();
 
-const nombre = document.getElementById("nombreCultivo").value;
+let nombre = selectorCultivo.value;
+
+if (nombre === "Otro") {
+    nombre = inputOtroCultivo.value.trim();
+}
+
+nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+
 const parcela = document.getElementById("parcela").value.trim();
 const fecha = document.getElementById("fechaSiembra").value;
 const etapa = document.getElementById("etapaCultivo").value;
@@ -119,6 +161,9 @@ cultivos.push(nuevoCultivo);
 guardarDatos();
 
 this.reset();
+
+campoOtroCultivo.classList.add("oculto");
+inputOtroCultivo.required = false;
 
 alert("¡Cultivo registrado correctamente!");
 
@@ -196,6 +241,7 @@ cultivos.forEach(function(cultivo) {
 
 function escaparHTML(texto) {
 
+
 return String(texto).replace(/[&<>"']/g, function(caracter) {
 
     const equivalencias = {
@@ -209,6 +255,7 @@ return String(texto).replace(/[&<>"']/g, function(caracter) {
     return equivalencias[caracter];
 
 });
+
 
 }
 
@@ -227,7 +274,7 @@ if (!cultivo) return;
 
 const posicion = etapas.indexOf(cultivo.etapa);
 
-if (posicion === etapas.length - 1) {
+if (posicion === -1 || posicion === etapas.length - 1) {
     alert("Este cultivo ya se encuentra en la etapa de cosecha.");
     return;
 }
@@ -240,6 +287,7 @@ actualizarPantalla();
 
 alert("La etapa del cultivo fue actualizada.");
 
+
 }
 
 window.avanzarEtapa = avanzarEtapa;
@@ -249,6 +297,7 @@ window.avanzarEtapa = avanzarEtapa;
 // ==========================================
 
 function eliminarCultivo(id) {
+
 
 const confirmar = confirm("¿Estás seguro de eliminar este cultivo?");
 
@@ -319,6 +368,7 @@ cultivos.forEach(function(cultivo) {
 
 const calendario = {
 
+
 "Poroto": {
     meses: "Septiembre a diciembre",
     consejo: "Verificá la humedad del suelo y evitá sembrar si se esperan lluvias excesivas."
@@ -354,23 +404,76 @@ const calendario = {
     consejo: "Considerá la humedad del suelo y las condiciones de la temporada."
 }
 
+
 };
 
+// ==========================================
+// ACTUALIZAR OPCIONES DEL CALENDARIO
+// ==========================================
+
+function actualizarOpcionesCalendario() {
+
+const selector = document.getElementById("cultivoCalendario");
+
+const seleccionAnterior = selector.value;
+
+selector.innerHTML = `
+    <option value="">Seleccioná una opción</option>
+`;
+
+const nombres = [...new Set(cultivos.map(function(cultivo) {
+    return cultivo.nombre;
+}))];
+
+nombres.forEach(function(nombre) {
+
+    const opcion = document.createElement("option");
+
+    opcion.value = nombre;
+    opcion.textContent = nombre;
+
+    selector.appendChild(opcion);
+
+});
+
+if (nombres.includes(seleccionAnterior)) {
+    selector.value = seleccionAnterior;
+}
+
+
+}
+
+// ==========================================
+// CONSULTAR CALENDARIO
+// ==========================================
+
 function consultarCalendario() {
+
 
 const nombre = document.getElementById("cultivoCalendario").value;
 
 const resultado = document.getElementById("resultadoCalendario");
 
 if (!nombre) {
-    resultado.innerHTML = "<p>Seleccioná un cultivo para continuar.</p>";
+    resultado.innerHTML = "<p>Primero registrá un cultivo en Mi kokue.</p>";
     return;
 }
 
 const dato = calendario[nombre];
 
+if (!dato) {
+
+    resultado.innerHTML = `
+        <h3>🌱 ${escaparHTML(nombre)}</h3>
+        <p>Todavía no tenemos información del calendario para este cultivo.</p>
+        <p>Consultá las recomendaciones agrícolas de tu región antes de sembrar.</p>
+    `;
+
+    return;
+}
+
 resultado.innerHTML = `
-    <h3>🌱 ${nombre}</h3>
+    <h3>🌱 ${escaparHTML(nombre)}</h3>
     <p><strong>Período orientativo:</strong> ${dato.meses}</p>
     <p><strong>Recomendación:</strong> ${dato.consejo}</p>
     <p><em>La época puede variar según la zona y las condiciones climáticas.</em></p>
@@ -395,10 +498,12 @@ const alternativas = {
 "Asterácea": ["Maíz", "Poroto", "Mandioca"],
 "Apiácea": ["Maíz", "Poroto", "Lechuga"]
 
+
 };
 
 function consultarRotacion() {
-    
+
+
 const nombre = document.getElementById("cultivoAnterior").value;
 
 const resultado = document.getElementById("resultadoRotacion");
@@ -420,11 +525,11 @@ if (!opciones) {
 let lista = "";
 
 opciones.forEach(function(cultivo) {
-    lista += `<li>${cultivo}</li>`;
+    lista += `<li>${escaparHTML(cultivo)}</li>`;
 });
 
 resultado.innerHTML = `
-    <h3>🌱 Alternativas después de ${nombre}</h3>
+    <h3>🌱 Alternativas después de ${escaparHTML(nombre)}</h3>
     <p><strong>Familia del cultivo anterior:</strong> ${familia}</p>
     <p>Algunas alternativas para evaluar:</p>
     <ul>${lista}</ul>
@@ -445,6 +550,8 @@ window.consultarRotacion = consultarRotacion;
 // ==========================================
 
 function generarAvisos() {
+
+
 const avisos = [];
 
 cultivos.forEach(function(cultivo) {
@@ -480,6 +587,10 @@ return mensajes[cultivo.etapa] || "Revisá el estado de tu cultivo.";
 
 }
 
+// ==========================================
+// MOSTRAR NOTIFICACIONES
+// ==========================================
+
 function mostrarNotificaciones() {
 
 
@@ -490,10 +601,12 @@ if (!lista) return;
 const avisos = generarAvisos();
 
 if (avisos.length === 0) {
+
     lista.innerHTML = `
         <p>No tenés avisos por el momento.</p>
         <p>Cuando registres un cultivo, aparecerán aquí tus recordatorios.</p>
     `;
+
     return;
 }
 
@@ -514,10 +627,9 @@ avisos.forEach(function(aviso) {
 
 });
 
-
 }
 
-// ==========================================
+// ==========================================    
 // ACTUALIZAR TODA LA APLICACION
 // ==========================================
 
@@ -530,8 +642,13 @@ actualizarInicio();
 
 mostrarNotificaciones();
 
+actualizarOpcionesCalendario();
+
 
 }
 
+// ==========================================
 // INICIAR APLICACION
+// ==========================================
+
 actualizarPantalla();
