@@ -7,126 +7,160 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<div id="pantallaBienvenida" class="pantalla-bienvenida">
+    <div class="bienvenida-contenido">
+        <div class="bienvenida-icono">🌱</div>
+        <h1>KOKUE ÑANGAREKO KUATIAHA</h1>
+        <p>Sistema comunitario de gestión y planificación de cultivos</p>
+        <span class="bienvenida-lema">Ñañangareko ñande yvýre, ñañangareko ñane rembiapóre.</span>
+    </div>
+</div>
+
 <div class="contenedor">
-<!-- MENU LATERAL -->
+
 <aside class="menu">
     <nav>
-        <button class="activo" onclick="mostrarSeccion('inicio', this)">Inicio</button>
-        <button onclick="mostrarSeccion('kokue', this)"> Mi kokue</button>
-        <button onclick="mostrarSeccion('calendario', this)"> Calendario</button>
-        <button onclick="mostrarSeccion('notificaciones', this)"> Mis avisos</button>
+        <button class="activo" onclick="mostrarSeccion('inicio', this)" data-i18n="Inicio">Inicio</button>
+        <button onclick="mostrarSeccion('kokue', this)" data-i18n="Mi kokue">Mi kokue</button>
+        <button onclick="mostrarSeccion('calendario', this)" data-i18n="Calendario">Calendario</button>
+        <button onclick="mostrarSeccion('notificaciones', this)" data-i18n="Mis avisos">Mis avisos</button>
     </nav>
 </aside>
 
-<!-- CONTENIDO PRINCIPAL -->
 <main class="contenido">
 
     <header class="encabezado">
-        <div>
+        <div class="encabezado-texto">
             <h1>KOKUE ÑANGAREKO KUATIAHA</h1>
-            <p>Sistema comunitario de gestión y planificación de cultivos.</p>
-            <p class="lema">
-                Ñañangareko ñande yvýre, ñañangareko ñane rembiapóre.
+            <p data-i18n="Sistema comunitario de gestión y planificación de cultivos.">
+                Sistema comunitario de gestión y planificación de cultivos.
             </p>
+            <p class="lema">Ñañangareko ñande yvýre, ñañangareko ñane rembiapóre.</p>
+        </div>
+
+        <div class="selector-idioma">
+            <label for="selectorIdioma" data-i18n="Idioma">Idioma</label>
+            <select id="selectorIdioma" aria-label="Seleccionar idioma">
+                <option value="es">Español</option>
+                <option value="gn">Guaraní</option>
+            </select>
         </div>
     </header>
-
 
     <!-- INICIO -->
     <section id="inicio" class="seccion">
 
-        <h2>¡Bienvenido a tu kokue!</h2>
-
-        <p>Elegí qué necesitás consultar hoy.</p>
+        <h2 data-i18n="¡Bienvenido a tu kokue!">¡Bienvenido a tu kokue!</h2>
+        <p data-i18n="Elegí qué necesitás consultar hoy.">Elegí qué necesitás consultar hoy.</p>
 
         <div class="tarjetas tarjetas-principales">
 
-            <button class="tarjeta acceso-principal"
-                onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+            <button class="tarjeta acceso-principal" onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
                 <span class="icono-principal">🌱</span>
-                <strong>MI KOKUE</strong>
-                <span>Registrá y consultá tus cultivos.</span>
+                <strong data-i18n="MI KOKUE">MI KOKUE</strong>
+                <span data-i18n="Registrá y consultá tus cultivos.">Registrá y consultá tus cultivos.</span>
             </button>
 
-            <button class="tarjeta acceso-principal"
-                onclick="mostrarSeccion('calendario', document.querySelectorAll('.menu button')[2])">
+            <button class="tarjeta acceso-principal" onclick="mostrarSeccion('calendario', document.querySelectorAll('.menu button')[2])">
                 <span class="icono-principal">📅</span>
-                <strong>CALENDARIO</strong>
-                <span>Consultá las épocas de siembra.</span>
+                <strong data-i18n="CALENDARIO">CALENDARIO</strong>
+                <span data-i18n="Consultá las épocas de siembra.">Consultá las épocas de siembra.</span>
             </button>
 
-            <button class="tarjeta acceso-principal"
-                onclick="mostrarSeccion('notificaciones', document.querySelectorAll('.menu button')[3])">
+            <button class="tarjeta acceso-principal" onclick="mostrarSeccion('notificaciones', document.querySelectorAll('.menu button')[3])">
                 <span class="icono-principal">🔔</span>
-                <strong>MIS AVISOS</strong>
-                <span>Revisá tus recordatorios.</span>
+                <strong data-i18n="MIS AVISOS">MIS AVISOS</strong>
+                <span data-i18n="Revisá tus recordatorios.">Revisá tus recordatorios.</span>
             </button>
 
         </div>
 
         <div class="panel">
-            <h3>Mis cultivos actuales</h3>
+            <h3 data-i18n="Mis cultivos actuales">Mis cultivos actuales</h3>
             <div id="resumenCultivos"></div>
         </div>
 
     </section>
 
-
     <!-- MI KOKUE -->
     <section id="kokue" class="seccion oculto">
 
-        <h2>Mi kokue</h2>
-
-        <p>Registrá tus cultivos y acompañá su crecimiento.</p>
+        <h2 data-i18n="Mi kokue">Mi kokue</h2>
+        <p data-i18n="Registrá tus cultivos y acompañá su crecimiento.">
+            Registrá tus cultivos y acompañá su crecimiento.
+        </p>
 
         <div class="panel">
 
-            <h3>Registrar un cultivo</h3>
+            <h3 data-i18n="Registrar un cultivo">Registrar un cultivo</h3>
 
             <form id="formCultivo">
 
-                <label for="nombreCultivo">¿Qué vas a cultivar?</label>
+                <label for="nombreCultivo" data-i18n="¿Qué vas a cultivar?">
+                    ¿Qué vas a cultivar?
+                </label>
 
                 <select id="nombreCultivo" required>
-                    <option value="">Seleccioná un cultivo</option>
-                    <option value="Poroto">Poroto</option>
-                    <option value="Maíz">Maíz</option>
-                    <option value="Mandioca">Mandioca</option>
-                    <option value="Tomate">Tomate</option>
-                    <option value="Lechuga">Lechuga</option>
-                    <option value="Zanahoria">Zanahoria</option>
-                    <option value="Maní">Maní</option>
-<option value="Otro">Otro (escribir cultivo)</option>
-</select>
-
-<div id="campoOtroCultivo" class="oculto">
-    <label for="otroCultivo">Escribí el nombre del cultivo:</label>
-    <input
-        type="text"
-        id="otroCultivo"
-        placeholder="Ejemplo: Zapallo"
-    >
-</div>
-
-                <label for="parcela">¿En qué parcela?</label>
-                <input type="text" id="parcela" placeholder="Ejemplo: Parcela 1" required>
-
-                <label for="fechaSiembra">Fecha de siembra:</label>
-                <input type="date" id="fechaSiembra" required>
-
-                <label for="etapaCultivo">¿En qué etapa se encuentra?</label>
-
-                <select id="etapaCultivo" required>
-                    <option value="">Seleccioná una etapa</option>
-                    <option value="Preparación del suelo">Preparación del suelo</option>
-                    <option value="Siembra">Siembra</option>
-                    <option value="Germinación">Germinación</option>
-                    <option value="Crecimiento">Crecimiento</option>
-                    <option value="Floración">Floración</option>
-                    <option value="Cosecha">Cosecha</option>
+                    <option value="" data-i18n="Seleccioná un cultivo">Seleccioná un cultivo</option>
+                    <option value="Poroto" data-i18n="Poroto">Poroto</option>
+                    <option value="Maíz" data-i18n="Maíz">Maíz</option>
+                    <option value="Mandioca" data-i18n="Mandioca">Mandioca</option>
+                    <option value="Tomate" data-i18n="Tomate">Tomate</option>
+                    <option value="Lechuga" data-i18n="Lechuga">Lechuga</option>
+                    <option value="Zanahoria" data-i18n="Zanahoria">Zanahoria</option>
+                    <option value="Maní" data-i18n="Maní">Maní</option>
+                    <option value="Otro" data-i18n="Otro">Otro</option>
                 </select>
 
-                <button type="submit" class="btn-guardar">
+                <div id="campoOtroCultivo" class="oculto">
+
+                    <label for="otroCultivo" data-i18n="Escribí el nombre del cultivo:">
+                        Escribí el nombre del cultivo:
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otroCultivo"
+                        placeholder="Ejemplo: Zapallo"
+                        data-i18n-placeholder="Ejemplo: Zapallo"
+                    >
+
+                </div>
+
+                <label for="parcela" data-i18n="¿En qué parcela?">
+                    ¿En qué parcela?
+                </label>
+
+                <input
+                    type="text"
+                    id="parcela"
+                    placeholder="Ejemplo: Parcela 1"
+                    data-i18n-placeholder="Ejemplo: Parcela 1"
+                    required
+                >
+
+                <label for="fechaSiembra" data-i18n="Fecha de siembra:">
+                    Fecha de siembra:
+                </label>
+
+                <input type="date" id="fechaSiembra" required>
+
+                <label for="etapaCultivo" data-i18n="¿En qué etapa se encuentra?">
+                    ¿En qué etapa se encuentra?
+                </label>
+
+                <select id="etapaCultivo" required>
+                    <option value="" data-i18n="Seleccioná una etapa">Seleccioná una etapa</option>
+                    <option value="Preparación del suelo" data-i18n="Preparación del suelo">Preparación del suelo</option>
+                    <option value="Siembra" data-i18n="Siembra">Siembra</option>
+                    <option value="Germinación" data-i18n="Germinación">Germinación</option>
+                    <option value="Crecimiento" data-i18n="Crecimiento">Crecimiento</option>
+                    <option value="Floración" data-i18n="Floración">Floración</option>
+                    <option value="Cosecha" data-i18n="Cosecha">Cosecha</option>
+                </select>
+
+                <button type="submit" class="btn-guardar" data-i18n="Guardar cultivo">
                     Guardar cultivo
                 </button>
 
@@ -135,55 +169,56 @@
         </div>
 
         <div class="panel">
-            <h3>Mis cultivos registrados</h3>
 
-            <p>Identificá cada cultivo por su color.</p>
+            <h3 data-i18n="Mis cultivos registrados">Mis cultivos registrados</h3>
+            <p data-i18n="Identificá cada cultivo por su color.">
+                Identificá cada cultivo por su color.
+            </p>
 
             <div id="listaCultivos"></div>
+
         </div>
 
         <div class="panel">
-            <h3>Otras herramientas</h3>
 
-            <button class="btn-guardar"
-                onclick="mostrarSeccion('clima', null)">
+            <h3 data-i18n="Otras herramientas">Otras herramientas</h3>
+
+            <button class="btn-guardar" onclick="mostrarSeccion('clima', null)" data-i18n="🌦️ Clima y recomendaciones">
                 🌦️ Clima y recomendaciones
             </button>
 
-            <button class="btn-guardar"
-                onclick="mostrarSeccion('rotacion', null)">
+            <button class="btn-guardar" onclick="mostrarSeccion('rotacion', null)" data-i18n="🔄 Rotación de cultivos">
                 🔄 Rotación de cultivos
             </button>
+
         </div>
 
     </section>
 
-
-    <!-- CALENDARIO AGRICOLA -->
+    <!-- CALENDARIO -->
     <section id="calendario" class="seccion oculto">
 
-        <h2> Calendario agrícola</h2>
+        <h2 data-i18n="Calendario agrícola">Calendario agrícola</h2>
 
-        <p>Consultá los períodos orientativos para sembrar.</p>
+        <p data-i18n="Consultá los períodos orientativos para sembrar.">
+            Consultá los períodos orientativos para sembrar.
+        </p>
 
         <div class="panel">
 
-            <h3>¿Qué querés sembrar?</h3>
+            <h3 data-i18n="¿Qué querés sembrar?">¿Qué querés sembrar?</h3>
 
-            <label for="cultivoCalendario">Seleccioná un cultivo:</label>
+            <label for="cultivoCalendario" data-i18n="Seleccioná un cultivo:">
+                Seleccioná un cultivo:
+            </label>
 
             <select id="cultivoCalendario">
-                <option value="">Seleccioná una opción</option>
-                <option value="Poroto">Poroto</option>
-                <option value="Maíz">Maíz</option>
-                <option value="Mandioca">Mandioca</option>
-                <option value="Tomate">Tomate</option>
-                <option value="Lechuga">Lechuga</option>
-                <option value="Zanahoria">Zanahoria</option>
-                <option value="Maní">Maní</option>
+                <option value="" data-i18n="Seleccioná una opción">
+                    Seleccioná una opción
+                </option>
             </select>
 
-            <button class="btn-guardar" onclick="consultarCalendario()">
+            <button class="btn-guardar" onclick="consultarCalendario()" data-i18n="Consultar">
                 Consultar
             </button>
 
@@ -192,56 +227,63 @@
         </div>
 
         <div class="panel">
-            <h3> Consultar el clima</h3>
 
-            <p>También podés consultar las condiciones climáticas y recomendaciones.</p>
+            <h3 data-i18n="Consultar el clima">Consultar el clima</h3>
 
-            <button class="btn-guardar"
-                onclick="mostrarSeccion('clima', null)">
+            <p data-i18n="También podés consultar las condiciones climáticas y recomendaciones.">
+                También podés consultar las condiciones climáticas y recomendaciones.
+            </p>
+
+            <button class="btn-guardar" onclick="mostrarSeccion('clima', null)" data-i18n="Ver clima y recomendaciones">
                 Ver clima y recomendaciones
             </button>
+
         </div>
 
         <div class="panel">
-            <h3>Importante</h3>
 
-            <p>
-                Los períodos son orientativos. La época adecuada puede variar
-                según la región, la variedad y las condiciones del suelo y del clima.
+            <h3 data-i18n="Importante">Importante</h3>
+
+            <p data-i18n="Los períodos son orientativos. La época adecuada puede variar según la región, la variedad y las condiciones del suelo y del clima.">
+                Los períodos son orientativos. La época adecuada puede variar según la región, la variedad y las condiciones del suelo y del clima.
             </p>
+
         </div>
 
     </section>
 
-
     <!-- CLIMA -->
     <section id="clima" class="seccion oculto">
 
-        <h2>Clima y recomendaciones</h2>
+        <h2 data-i18n="Clima y recomendaciones">Clima y recomendaciones</h2>
 
-        <p>Información y consejos sencillos para cuidar tus cultivos.</p>
+        <p data-i18n="Información y consejos sencillos para cuidar tus cultivos.">
+            Información y consejos sencillos para cuidar tus cultivos.
+        </p>
 
         <div class="panel">
 
-            <h3>Condiciones climáticas</h3>
+            <h3 data-i18n="Condiciones climáticas">Condiciones climáticas</h3>
 
-            <span class="etiqueta">Datos de demostración</span>
+            <span class="etiqueta" data-i18n="Datos de demostración">
+                Datos de demostración
+            </span>
 
             <div class="clima-datos">
 
                 <div class="dato-clima">
-                    <h3>Temperatura</h3>
+                    <h3 data-i18n="Temperatura">Temperatura</h3>
                     <strong>28 °C</strong>
                 </div>
 
                 <div class="dato-clima">
-                    <h3>Humedad</h3>
+                    <h3 data-i18n="Humedad">Humedad</h3>
                     <strong>65 %</strong>
                 </div>
 
                 <div class="dato-clima">
-                    <h3>Condición</h3>
-                    <strong>Parcialmente nublado</strong>
+                    <h3 data-i18n="Condición">Condición</h3>
+                    <strong data-i18n="Parcialmente nublado">Parcialmente nublado</strong>
                 </div>
 
             </div>
@@ -250,58 +292,73 @@
 
         <div class="panel">
 
-            <h3>Recomendaciones</h3>
+            <h3 data-i18n="Recomendaciones">Recomendaciones</h3>
 
             <div class="recomendacion">
-                <strong>Cuidado del suelo</strong>
-                <p>Prepará el terreno y verificá que tenga un buen drenaje.</p>
+                <strong data-i18n="Cuidado del suelo">Cuidado del suelo</strong>
+                <p data-i18n="Prepará el terreno y verificá que tenga un buen drenaje.">
+                    Prepará el terreno y verificá que tenga un buen drenaje.
+                </p>
             </div>
 
             <div class="recomendacion">
-                <strong>Riego</strong>
-                <p>Controlá la humedad del suelo antes de regar.</p>
+                <strong data-i18n="Riego">Riego</strong>
+                <p data-i18n="Controlá la humedad del suelo antes de regar.">
+                    Controlá la humedad del suelo antes de regar.
+                </p>
             </div>
 
             <div class="recomendacion">
-                <strong>Seguimiento</strong>
-                <p>Observá el crecimiento de tus cultivos y revisá si presentan cambios.</p>
+                <strong data-i18n="Seguimiento">Seguimiento</strong>
+                <p data-i18n="Observá el crecimiento de tus cultivos y revisá si presentan cambios.">
+                    Observá el crecimiento de tus cultivos y revisá si presentan cambios.
+                </p>
             </div>
 
         </div>
 
-        <button class="btn-guardar"
-            onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+        <button class="btn-guardar" onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])" data-i18n="Volver a Mi kokue">
             Volver a Mi kokue
         </button>
 
     </section>
 
-
-    <!-- ROTACION -->
+    <!-- ROTACIÓN -->
     <section id="rotacion" class="seccion oculto">
 
-        <h2> Rotación de cultivos</h2>
+        <h2 data-i18n="Rotación de cultivos">Rotación de cultivos</h2>
 
-        <p>Planificá qué cultivar en tu parcela la próxima temporada.</p>
+        <p data-i18n="Planificá qué cultivar en tu parcela la próxima temporada.">
+            Planificá qué cultivar en tu parcela la próxima temporada.
+        </p>
 
         <div class="panel">
 
-            <h3>¿Qué cultivaste anteriormente?</h3>
+            <h3 data-i18n="¿Qué cultivaste anteriormente?">
+                ¿Qué cultivaste anteriormente?
+            </h3>
 
-            <label for="cultivoAnterior">Seleccioná el cultivo anterior:</label>
+            <label for="cultivoAnterior" data-i18n="Seleccioná el cultivo anterior:">
+                Seleccioná el cultivo anterior:
+            </label>
 
             <select id="cultivoAnterior">
-                <option value="">Seleccioná un cultivo</option>
-                <option value="Poroto">Poroto</option>
-                <option value="Maíz">Maíz</option>
-                <option value="Mandioca">Mandioca</option>
-                <option value="Tomate">Tomate</option>
-                <option value="Lechuga">Lechuga</option>
-                <option value="Zanahoria">Zanahoria</option>
-                <option value="Maní">Maní</option>
+
+                <option value="" data-i18n="Seleccioná un cultivo">
+                    Seleccioná un cultivo
+                </option>
+
+                <option value="Poroto" data-i18n="Poroto">Poroto</option>
+                <option value="Maíz" data-i18n="Maíz">Maíz</option>
+                <option value="Mandioca" data-i18n="Mandioca">Mandioca</option>
+                <option value="Tomate" data-i18n="Tomate">Tomate</option>
+                <option value="Lechuga" data-i18n="Lechuga">Lechuga</option>
+                <option value="Zanahoria" data-i18n="Zanahoria">Zanahoria</option>
+                <option value="Maní" data-i18n="Maní">Maní</option>
+
             </select>
 
-            <button class="btn-guardar" onclick="consultarRotacion()">
+            <button class="btn-guardar" onclick="consultarRotacion()" data-i18n="Ver alternativas">
                 Ver alternativas
             </button>
 
@@ -310,33 +367,35 @@
         </div>
 
         <div class="panel">
-            <h3>¿Por qué rotar los cultivos?</h3>
 
-            <p>
-                La rotación permite alternar diferentes tipos de cultivos
-                y ayuda a cuidar el suelo y reducir problemas asociados
-                con la repetición de una misma familia vegetal.
+            <h3 data-i18n="¿Por qué rotar los cultivos?">
+                ¿Por qué rotar los cultivos?
+            </h3>
+
+            <p data-i18n="La rotación permite alternar diferentes tipos de cultivos y ayuda a cuidar el suelo y reducir problemas asociados con la repetición de una misma familia vegetal.">
+                La rotación permite alternar diferentes tipos de cultivos y ayuda a cuidar el suelo y reducir problemas asociados con la repetición de una misma familia vegetal.
             </p>
+
         </div>
 
-        <button class="btn-guardar"
-            onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])">
+        <button class="btn-guardar" onclick="mostrarSeccion('kokue', document.querySelectorAll('.menu button')[1])" data-i18n="Volver a Mi kokue">
             Volver a Mi kokue
         </button>
 
     </section>
 
-
     <!-- NOTIFICACIONES -->
     <section id="notificaciones" class="seccion oculto">
 
-        <h2> Mis avisos</h2>
+        <h2 data-i18n="Mis avisos">Mis avisos</h2>
 
-        <p>Revisá los recordatorios para cuidar tus cultivos.</p>
+        <p data-i18n="Revisá los recordatorios para cuidar tus cultivos.">
+            Revisá los recordatorios para cuidar tus cultivos.
+        </p>
 
         <div class="panel">
 
-            <h3>Mis recordatorios</h3>
+            <h3 data-i18n="Mis recordatorios">Mis recordatorios</h3>
 
             <div id="listaNotificaciones"></div>
 
@@ -345,8 +404,6 @@
     </section>
 
 </main>
-
-
 </div>
 
 <script src="script.js"></script>
